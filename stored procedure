@@ -1,0 +1,18 @@
+create procedure summary_order_status
+(@status_id int) as
+begin
+   select 
+   order_id,
+   customer_name,
+   product_name,
+   quantity,
+   status_order
+   from FactSalesOrder s
+   left join DimCustomer c on s.customer_id = c.customer_id
+   left join DimProduct p on p.product_id = s.product_id
+   left join DimStatusOrder so on so.status_id = s. status_id
+   where so.status_id=@status_id
+   END
+
+   
+   exec summary_order_status @status_id=1
